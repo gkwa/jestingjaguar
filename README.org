@@ -1,0 +1,152 @@
+* Jesting Jaguar - Golang Template Escaper
+
+** Overview
+A simple tool to escape Golang template brackets to prevent interpolation.
+
+** Usage Cheatsheet
+#+begin_src sh
+# Escape template brackets in a single file
+jestingjaguar escape file.txt
+
+# Recursively escape template brackets in a directory
+jestingjaguar escape ./templates/
+
+# Increase verbosity level
+jestingjaguar escape file.txt -v
+jestingjaguar escape ./templates/ -vv
+#+end_src
+
+** Installation
+#+begin_src sh
+go install github.com/gkwa/jestingjaguar@latest
+#+end_src
+
+## Claude.ai generated this with this prompt
+
+I need a golang app that will escape golang template brackets so this:
+```
+artifacts/{{ workflow.name }}
+```
+
+becomes this:
+```
+artifacts/{{"{{"}} workflow.name {{"}}"}}
+
+```
+
+and likewise for all other instances of golang's standard template open and closed delimiters.
+
+So what we're doing is essentially preventing interpolation so that we can show template syntax raw.
+
+We also need to prevent double escaping.
+
+We need extensive tests too.
+
+We need to test to ensure that we're not double escaping and that we're handling both single and double quotes since golang templates allow for this.
+
+We should use escape subcommand and the command should take either a directory or a path to a file.  If the argument is a directory then our app should recursively escape on files in directories and subdirectories.
+
+If argument is just a file path then the escaping should be performed on the file itself.
+
+We should show metadata in logs indicating how many escapes we've performed.
+
+## use this module setup
+
+I've already gotten started with:
+
+```
+go mod init github.com/gkwa/jestingjaguar
+```
+
+## I've included some requirements here
+
+- don't use deprecated packages, for example io/ioutil is deprecated, let's not use that
+
+- when you reply, don't include files `go.mod` or `go.sum` since I can generate that using `go mod init` and `go mod tidy`.  By not sending me these files we save resources/time as you don't have to write those out.
+
+## use cobra-cli and viper please
+
+Our app will use cobra-cli package along with viper package for commandline arg parsing along with app config.
+
+When writing golang apps using cobra-cli, its tempting to put app logic in cmd directory but this is considered bad practice.
+
+Our app domain logic should be in our app directory and the go files in cmd directory should remain lite and call out to packages in our domain logic directories.
+
+## more suggestions
+
+## readme: get to the point quickly
+
+When writing a readme, please be brief and don't include licensing or contribution sections.
+
+Please always show cheatsheet that demonstrates the commandline interface and show this interface in code block with a simple one line comment above the cli indicating briefly its purpose.
+
+## readme in org mode please
+
+We should have a README but it should be written in org-mode instead of in markdown.
+
+## files in txtar format please
+
+Show your code as txtar format in a single code block.
+
+The txtar format is very simple, its a single text file that contains 1 or more headers like this:
+
+```
+-- filename --
+```
+
+and then the contents of the file goes directly beneath the header in the txtar file.
+
+Notice how there is no whitespace before or after the -- delimiters in the txt filename delimiters.
+
+So for example if file1.txt has contents "a" and src/file2.c has contents "int i=0;" then the txtar file contents.txtar would look like this:
+
+```
+-- file1.txt --
+a
+-- src/file2.c --
+int i=0;
+```
+
+And the directory would have this hierarchy:
+```
+.
+├── contents.txtar
+├── file1.txt
+└── src
+    └── file2.c
+2 directories, 3 files
+```
+
+If we start communicating back and forth using txtar format, then you don't need to send files back unless they are different from what I sent you.
+
+Please make sure that if you have changed any of the files that I sent that you are replying with only those files and when you reply, you're sending me all of your changes including the whole file that was modified.  Show all code that has changed in a single code block using txtar format.
+
+You might be tempted to abbreviate with a comment like this:
+
+```
+// ... rest of the file remains unchanged ...
+```
+
+but please don't do that...instead write the whole file out as you expect it should be without abbreviating or truncating.
+
+Remember: please show only the files that have changed instead of all of the files.
+
+Remember to respond with file changes in txtar format make sure to not write some txtar in a block and then make a comment and then write another txtar block.  Instead keep the txtar for your respone in a single block without breaking for comments.   In summary, its best to show a single block of txtar in if you have code changes in a response.
+
+## follow solid principles please
+
+We need to make sure to keep our code following SOLID design principles.
+
+Our files should be as small as possible to practice good information hiding.
+
+## silence is golden
+
+Our app should not output anything for the happy path in the spirit of unix Philosophy which you can reference here https://www.linfo.org/rule_of_silence.html
+
+## log to stderr
+
+We should have logging such that each additional `--verbose` flag will increase log level.
+
+`-v` is an alias for `--verbose`.
+
+When writing log messages, all log messages should be sent to stderr instead of stdout."
