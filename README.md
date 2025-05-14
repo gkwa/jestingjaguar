@@ -1,10 +1,10 @@
-* Jesting Jaguar - Golang Template Escaper
+# Jesting Jaguar - Golang Template Escaper
 
-** Overview
+## Overview
 A simple tool to escape Golang template brackets to prevent interpolation.
 
-** Usage Cheatsheet
-#+begin_src sh
+## Usage Cheatsheet
+```sh
 # Escape template brackets in a single file
 jestingjaguar escape file.txt
 
@@ -14,15 +14,26 @@ jestingjaguar escape ./templates/
 # Increase verbosity level
 jestingjaguar escape file.txt -v
 jestingjaguar escape ./templates/ -vv
-#+end_src
+```
 
-** Installation
-#+begin_src sh
+## Installation
+```sh
 go install github.com/gkwa/jestingjaguar@latest
-#+end_src
+```
 
-** Claude.ai generated this app with the prompt output from this
+## Example
+Input:
+```
+artifacts/{{ workflow.name }}
+```
 
-#+begin_src sh
+Output:
+```
+artifacts/{{"{{"}} workflow.name {{"}}"}}
+```
+
+## Claude.ai generated this app with the prompt output from this
+
+```
 rm -rf /tmp/t && boilerplate --missing-key-action zero --non-interactive --output-folder=/tmp/t --template-url git::https://github.com/gkwa/manyeast.git//use-golang-to-escape-golang-template --var GoModuleName=jestingjaguar && find /tmp/t && cat /tmp/t/use-golang-to-escape-golang-template.tmpl | less
-#+end_src
+```
